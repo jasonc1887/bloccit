@@ -18,7 +18,7 @@ describe("Post", () => {
                 this.topic = topic;
 
                 Post.create({
-                    title: "My fisrt visit to Proxima Centauri b",
+                    title: "My first visit to Proxima Centauri b",
                     body: "I saw some rocks.",
                     topicId: this.topic.id
                 })
