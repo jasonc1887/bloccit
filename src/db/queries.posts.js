@@ -38,7 +38,7 @@ module.exports = {
             });
           } else {
             req.flash("notice", "You are not authorized to do that.")
-            callabck(401);
+            callback(401);
           }
         })
         .catch((err) => {
@@ -63,10 +63,10 @@ module.exports = {
               fields: Object.keys(updatedPost)
             })
             .then(() => {
-              callabck(null, post);
+              callback(null, post);
             })
             .catch((err) => {
-              callabck(err);
+              callback(err);
             });
           } else {
 

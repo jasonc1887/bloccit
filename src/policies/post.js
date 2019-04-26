@@ -3,7 +3,7 @@ const ApplicationPolicy = require("./application");
 module.exports = class PostPolicy extends ApplicationPolicy {
 
     new() {
-        return (this.user != null || this._isAdmin());
+        return (this.user || this._isAdmin());
     }
 
     create() {
@@ -11,10 +11,10 @@ module.exports = class PostPolicy extends ApplicationPolicy {
     }
 
     edit() {
-        return this.user != null && this.record && (this._isOwner() || this._isAdmin());
+        return this.user && this.record && (this._isOwner() || this._isAdmin());
     }
 
     destroy() {
-        return this.edit(); //defers to edit
+        return this.edit(); 
     }
 }

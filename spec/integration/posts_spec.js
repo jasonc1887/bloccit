@@ -156,16 +156,25 @@ describe("routes : posts", () => {
   describe("member user performing CRUD actions for Post", () => {
 
     beforeEach((done) => {
+      
+      User.create({
+        email: "admin@example.com",
+        password: "123456",
+        role: "member"
+      })
+      .then((user) => {
       request.get({
         url: "http://localhost:3000/auth/fake",
         form: {
-          role: "member"
+          role: user.role,
+          userId: user.id,
+          email: user.email
         }
       },
       (err, res, body) => {
         done();
-      }
-     );
+      });
+     });
     });
 
     describe("GET /topics/:topicId/posts/new", () => {
