@@ -6,7 +6,6 @@ const Authorizer = require("../policies/comment");
 
 module.exports = {
 
- // #2
     createComment(newComment, callback){
      return Comment.create(newComment)
      .then((comment) => {
