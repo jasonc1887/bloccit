@@ -98,10 +98,10 @@ describe("routes : posts", () => {
             (err, res, body) => {
 
                 Post.findOne({where: {title: "Watching snow melt"}})
-                .then((post) => {
-                    expect(post).not.toBeNull();
+                .then((post) => { 
                     expect(post.title).toBe("Watching snow melt");
                     expect(post.body).toBe("Without a doubt my favorite things to do besides watching paint dry!");
+                    expect(post).not.toBeNull();
                     expect(post.topicId).not.toBeNull();
                     done();
                 })
