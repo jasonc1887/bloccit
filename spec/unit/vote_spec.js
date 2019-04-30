@@ -116,6 +116,56 @@ describe("Vote", () => {
                 done();
             })
         });
+
+        it("should not create a vote with a value of anything other than 1 or -1", (done) => {
+
+            Vote.create({
+                value: 2,
+                postId: this.post.id,
+                userId: this.user.id
+            })
+            .then((vote) => {
+
+                done();
+            })
+            .catch((err) => {
+
+                expect(err).not.toBeNull();
+                done();
+            })
+        });
+
+        it("should not create more than one vote per user for a given post", (done) => {
+
+            Vote.create({
+                value: 1,
+                postId: this.post.id,
+                userId: this.user.id
+            })
+            .then((vote) => {
+                expect(vote.value).toBe(1);
+                expect(vote.postId).toBe(this.post.id);
+                expect(vote.userId).toBe(this.user.id);
+
+                Vote.create({
+                    value: 1,
+                    postId: this.post.id,
+                    userId: this.user.id
+                })
+                .then((secondVote) => {
+
+                    done();
+                })
+                .catch((err) => {
+                    expect(err).not.toBeNull();
+                    done();
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                done();
+            });
+        });
     });
 
     describe("#setUser()", () => {
@@ -230,6 +280,60 @@ describe("Vote", () => {
                 console.log(err);
                 done();
             });
+        });
+
+        describe("#getPoints()", () => {
+
+            it("should get the total points associated with a given post", (done) => {
+
+                Vote.create({
+                    value: 1,
+                    userId: this.user.id,
+                    postId: this.post.id
+                })
+                .then((vote) => {
+                    this.post.votes = [vote];
+                    this.vote = this.post.votes[0];
+                    expect(this.post.getPoints()).toBe(1);
+                    done();
+                })
+            });
+        });
+
+        describe("#hasUpvoteFor()", () => {
+            it("should return true if the user with the matching userId has an upvote for the post", (done) => {
+
+                Vote.create({
+                    value: 1,
+                    userId: this.user.id,
+                    postId: this.post.id 
+                })
+                .then((vote) => {
+                    this.post.votes = [vote];
+                    this.vote = this.post.votes[0];
+
+                    expect(this.post.hasUpvoteFor()).toBe(true);
+                    done();
+                })
+            })
+        });
+
+        describe("#hasDownvoteFor()", () => {
+            it("should return true if the user with the matching userId has a downvote for the post", (done) => {
+
+                Vote.create({
+                    value: -1,
+                    userId: this.user.id,
+                    postId: this.post.id 
+                })
+                .then((vote) => {
+                    this.post.votes = [vote];
+                    this.vote = this.post.votes[0];
+
+                    expect(this.post.hasDownvoteFor()).toBe(true);
+                    done();
+                })
+            })
         });
     });
 });
