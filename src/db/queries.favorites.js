@@ -18,7 +18,7 @@ module.exports = {
       callback(err);
     });
   },
-
+  
   deleteFavorite(req, callback){
     const id = req.params.id;
 
