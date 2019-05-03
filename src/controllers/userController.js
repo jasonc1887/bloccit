@@ -62,5 +62,5 @@ module.exports = {
              res.render("users/show", {...result});
            }
          });
-       }
+    }
 }

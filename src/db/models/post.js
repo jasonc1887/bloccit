@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
           limit: 5,
           order: [["createdAt", "DESC"]]
         }
-      });
+  });
 
   return Post;
 };
